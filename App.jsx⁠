@@ -1,1 +1,269 @@
+import React, { useState } from 'react';
+import { 
+  Camera, Video, Music, Code, Film, Sparkles, Send, 
+  ChevronRight, Play, ExternalLink, Instagram, 
+  Menu, X, Lock, CheckCircle2, Sliders, Layers
+} from 'lucide-react';
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [sliderPos, setSliderPos] = useState(50);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [formSent, setFormSent] = useState(false);
+
+  const stats = [
+    { label: "Completed Projects", value: "85+" },
+    { label: "Music Releases", value: "14" },
+    { label: "Music Videos", value: "28" },
+    { label: "Years Creating", value: "6+" }
+  ];
+
+  const photos = [
+    { title: "Midnight Solitude", cat: "Cinematic", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800" },
+    { title: "Neon Cybernetic", cat: "Fashion", img: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800" },
+    { title: "Raw Acoustic Echo", cat: "Music", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800" },
+    { title: "Kachin Highland Mist", cat: "Landscape", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800" }
+  ];
+
+  const services = [
+    { title: "Photography", desc: "Cinematic portraiture, fashion editorial, and album artwork capture.", icon: Camera },
+    { title: "Video Production", desc: "4K music video direction, commercial cinematography, and post-production.", icon: Video },
+    { title: "Color Grading & Editing", desc: "Advanced DaVinci Resolve color pipelines and rhythm-based pacing.", icon: Film },
+    { title: "Music Production", desc: "Pop, Hip-Hop beat crafting, vocal processing, and multi-track audio mastering.", icon: Music },
+    { title: "Creative Web & App", desc: "High-performance web portfolio, Telegram Mini Apps, and custom tools.", icon: Code }
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#080808] text-neutral-200 selection:bg-[#D4AF37] selection:text-black font-sans">
+      {/* Sticky Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#080808]/80 backdrop-blur-md border-b border-neutral-900">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('home')}>
+            <span className="text-xl font-black tracking-widest text-white uppercase">
+              LASHI <span className="text-[#D4AF37]">TUTU</span>
+            </span>
+          </div>
+
+          <div className="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest font-semibold text-neutral-400">
+            {['home', 'photography', 'video', 'editing', 'music', 'services', 'contact'].map((item) => (
+              <button 
+                key={item} 
+                onClick={() => setActiveTab(item)}
+                className={`transition-colors hover:text-[#D4AF37] ${activeTab === item ? 'text-[#D4AF37]' : ''}`}
+              >
+                {item}
+              </button>
+            ))}
+            <button 
+              onClick={() => setActiveTab('contact')}
+              className="ml-4 px-5 py-2.5 rounded-full border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-all duration-300 font-bold"
+            >
+              HIRE ME
+            </button>
+          </div>
+
+          <button className="md:hidden text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-[#111111] border-b border-neutral-800 px-6 py-8 flex flex-col gap-5 text-sm uppercase tracking-wider">
+            {['home', 'photography', 'video', 'editing', 'music', 'services', 'contact'].map((item) => (
+              <button 
+                key={item} 
+                onClick={() => { setActiveTab(item); setMobileMenuOpen(false); }}
+                className={`text-left ${activeTab === item ? 'text-[#D4AF37]' : 'text-neutral-400'}`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        )}
+      </nav>
+
+      <main className="pt-20">
+        {/* HERO SECTION */}
+        {activeTab === 'home' && (
+          <div>
+            <section className="relative min-h-[90vh] flex items-center justify-center text-center px-6 overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08)_0,transparent_70%)] pointer-events-none" />
+              <div className="max-w-4xl mx-auto z-10">
+                <span className="text-xs uppercase tracking-[0.4em] text-[#D4AF37] mb-6 block font-bold">
+                  Visual Creator • Music Artist • Digital Creative
+                </span>
+                <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+                  I Create Visuals, Music & <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-[#D4AF37]">
+                    Digital Experiences.
+                  </span>
+                </h1>
+                <p className="text-neutral-400 max-w-2xl mx-auto text-sm md:text-base mb-10 leading-relaxed">
+                  Photography, videography, video editing, music and digital projects — created with a cinematic and creative vision.
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <button 
+                    onClick={() => setActiveTab('photography')}
+                    className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#D4AF37] text-black font-bold tracking-widest text-xs uppercase hover:bg-[#e0be4a] transition-all"
+                  >
+                    VIEW MY WORK
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('contact')}
+                    className="w-full sm:w-auto px-8 py-4 rounded-full border border-neutral-700 text-white font-bold tracking-widest text-xs uppercase hover:border-[#D4AF37] transition-all"
+                  >
+                    CONTACT ME
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            {/* STATS */}
+            <section className="border-y border-neutral-900 bg-[#0d0d0d] py-16 px-6">
+              <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                {stats.map((s, idx) => (
+                  <div key={idx}>
+                    <div className="text-3xl md:text-5xl font-black text-white mb-2">{s.value}</div>
+                    <div className="text-xs tracking-widest uppercase text-neutral-500 font-semibold">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
+
+        {/* PHOTOGRAPHY */}
+        {(activeTab === 'photography' || activeTab === 'home') && (
+          <section className="max-w-7xl mx-auto px-6 py-24">
+            <div className="flex justify-between items-end mb-12">
+              <div>
+                <span className="text-xs uppercase tracking-widest text-[#D4AF37] font-bold block mb-2">Portfolio</span>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-white">SELECTED PHOTOGRAPHY</h2>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {photos.map((p, i) => (
+                <div key={i} className="group relative overflow-hidden rounded-2xl bg-neutral-900 border border-neutral-800">
+                  <img src={p.img} alt={p.title} className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+                    <div>
+                      <span className="text-xs text-[#D4AF37] uppercase font-bold tracking-wider">{p.cat}</span>
+                      <h3 className="text-xl font-bold text-white mt-1">{p.title}</h3>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* COLOR GRADING BEFORE/AFTER */}
+        {(activeTab === 'editing' || activeTab === 'home') && (
+          <section className="bg-[#0e0e0e] border-y border-neutral-900 py-24 px-6">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-12">
+                <span className="text-xs uppercase tracking-widest text-[#D4AF37] font-bold block mb-2">Post Production</span>
+                <h2 className="text-3xl font-extrabold text-white">COLOR GRADING COMPARISON</h2>
+                <p className="text-neutral-400 text-sm mt-2">Drag the slider to compare Flat RAW Log capture vs 35mm Film Print Grade.</p>
+              </div>
+              <div className="relative h-72 md:h-96 w-full rounded-2xl overflow-hidden select-none border border-neutral-800">
+                <img 
+                  src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200" 
+                  alt="Graded" 
+                  className="absolute inset-0 w-full h-full object-cover filter contrast-125 saturate-150" 
+                />
+                <div 
+                  className="absolute inset-0 overflow-hidden" 
+                  style={{ width: `${sliderPos}%` }}
+                >
+                  <img 
+                    src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200" 
+                    alt="RAW" 
+                    className="absolute inset-0 w-full h-full object-cover filter grayscale opacity-80 brightness-110" 
+                    style={{ width: '100%', maxWidth: 'none' }}
+                  />
+                  <span className="absolute top-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded text-xs uppercase font-bold tracking-widest">RAW LOG</span>
+                </div>
+                <span className="absolute top-4 right-4 bg-[#D4AF37] text-black px-3 py-1 rounded text-xs uppercase font-bold tracking-widest">GRADED</span>
+                <input 
+                  type="range" 
+                  min="0" 
+                  max="100" 
+                  value={sliderPos}
+                  onChange={(e) => setSliderPos(Number(e.target.value))}
+                  className="absolute inset-0 opacity-0 cursor-ew-resize w-full h-full"
+                />
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* SERVICES */}
+        {(activeTab === 'services' || activeTab === 'home') && (
+          <section className="max-w-7xl mx-auto px-6 py-24">
+            <div className="text-center mb-16">
+              <span className="text-xs uppercase tracking-widest text-[#D4AF37] font-bold block mb-2">Capabilities</span>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-white">SERVICES & COMMISSION</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {services.map((s, idx) => {
+                const Icon = s.icon;
+                return (
+                  <div key={idx} className="bg-[#111111] p-8 rounded-2xl border border-neutral-800 hover:border-[#D4AF37]/50 transition-all">
+                    <Icon className="text-[#D4AF37] mb-6" size={32} />
+                    <h3 className="text-lg font-bold text-white mb-2">{s.title}</h3>
+                    <p className="text-neutral-400 text-sm leading-relaxed">{s.desc}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* CONTACT */}
+        {(activeTab === 'contact' || activeTab === 'home') && (
+          <section className="max-w-3xl mx-auto px-6 py-24">
+            <div className="bg-[#111111] border border-neutral-800 rounded-3xl p-8 md:p-12">
+              <div className="text-center mb-8">
+                <span className="text-xs uppercase tracking-widest text-[#D4AF37] font-bold block mb-2">Connect</span>
+                <h2 className="text-3xl font-extrabold text-white">LET'S WORK TOGETHER</h2>
+              </div>
+              {formSent ? (
+                <div className="text-center py-12">
+                  <CheckCircle2 size={48} className="text-[#D4AF37] mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-white mb-2">Message Dispatched</h3>
+                  <p className="text-neutral-400 text-sm">Thank you. I will review your inquiry and respond shortly.</p>
+                </div>
+              ) : (
+                <form onSubmit={(e) => { e.preventDefault(); setFormSent(true); }} className="space-y-4">
+                  <div>
+                    <label className="text-xs uppercase tracking-wider text-neutral-400 font-bold block mb-2">Name</label>
+                    <input required type="text" className="w-full bg-[#080808] border border-neutral-800 rounded-xl px-4 py-3 text-white text-sm focus:border-[#D4AF37] outline-none" />
+                  </div>
+                  <div>
+                    <label className="text-xs uppercase tracking-wider text-neutral-400 font-bold block mb-2">Email</label>
+                    <input required type="email" className="w-full bg-[#080808] border border-neutral-800 rounded-xl px-4 py-3 text-white text-sm focus:border-[#D4AF37] outline-none" />
+                  </div>
+                  <div>
+                    <label className="text-xs uppercase tracking-wider text-neutral-400 font-bold block mb-2">Message</label>
+                    <textarea required rows={4} className="w-full bg-[#080808] border border-neutral-800 rounded-xl px-4 py-3 text-white text-sm focus:border-[#D4AF37] outline-none" />
+                  </div>
+                  <button type="submit" className="w-full py-4 rounded-xl bg-[#D4AF37] text-black font-bold uppercase tracking-widest text-xs hover:bg-[#e0be4a] transition-all">
+                    SEND MESSAGE
+                  </button>
+                </form>
+              )}
+            </div>
+          </section>
+        )}
+      </main>
+
+      {/* FOOTER */}
+      <footer className="border-t border-neutral-900 py-12 px-6 text-center text-xs text-neutral-600">
+        <p>© 2026 LASHI TUTU. All Rights Reserved. Built with Next.js & Supabase.</p>
+      </footer>
+    </div>
+  );
+}
 
