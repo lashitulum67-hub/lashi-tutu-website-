@@ -1,24 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LASHI TUTU — Creative Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              gold: '#D4AF37'
-            }
-          }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LASHI TUTU — Creative Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { gold: '#D4AF37' }
         }
       }
-    </script>
-  </head>
-  <body class="bg-[#080808] text-white">
-    <div id="root"></div>
-    <script type="module" src="/main.jsx"></script>
-  </body>
+    }
+  </script>
+</head>
+<body class="bg-[#080808] text-neutral-200">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function App() {
+      const [activeTab, setActiveTab] = useState('home');
+      const [sliderPos, setSliderPos] = useState(50);
+      const [formSent, setFormSent] = useState(false);
+
+      const stats = [
+        { label: "Completed Projects", value: "85+" },
+        { label: "Music Releases", value: "14" },
+        { label: "Music Videos", value: "28" },
+        { label: "Years Creating", value: "6+" }
+      ];
+
+      const photos = [
+        { title: "Midnight Solitude", cat: "Cinematic", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800" },
+        { title: "Neon Cybernetic", cat: "Fashion", img: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800" },
+        { title: "Raw Acoustic Echo", cat: "Music", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800" },
+        { title: "Kachin Highland Mist", cat: "Landscape", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800" }
+      ];
+
+      const services = [
+        { title: "Photography", desc: "Cinematic portraiture, fashion editorial, and album artwork capture." },
+        { title: "Video Production", desc: "4K music video direction, commercial cinematography, and post-production." },
+        { title: "Color Grading & Editing", desc: "Advanced DaVinci Resolve color pipelines and rhythm-based pacing." },
+        { title: "Music Production", desc: "Pop, Hip-Hop beat crafting, vocal processing, and multi-track mastering." },
+        { title: "Creative Web & App", desc: "High-performance web portfolio, Telegram Mini Apps, and custom tools." }
+      ];
+
+      return (
+        <div className="min-h-screen bg-[#080808]">
+          {/* Navigation */}
+          <nav className="fixed top-0 left-0 right-0 z-50 bg-[#080808]/90 backdrop-blur border-b border-neutral-900 px-6 h-20 flex items-center justify-between">
+            <span className="text-xl font-black tracking-widest text-white uppercase">
+              LASHI <span className="text-[#D4AF37]">TUTU</span>
+            </span>
+            <div className="flex gap-4 sm:gap-8 text-xs uppercase tracking-widest font-semibold text-neutral-400">
+              <button onClick={() => setActiveTab('home')} className={activeTab === 'home' ? 'text-[#D4AF37]' : ''}>Home</button>
+              <button onClick={() => setActiveTab('photography')} className={activeTab === 'photography' ? 'text-[#D4AF37]' : ''}>Work</button>
+              <button onClick={() => setActiveTab('contact')} className="px-4 py-2 rounded-full border border-[#D4AF37] text-[#D4AF37]">Hire Me</button>
+            </div>
+          </nav>
+
+          <main className="pt-24">
+            {/* Hero */}
+            {activeTab === 'home' && (
+              <div>
+                <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-6">
+                  <span className="text-xs uppercase tracking-[0.4em] text-[#D4AF37] mb-6 font-bold">
+                    Visual Creator • Music Artist • Digital Creative
+                  </span>
+                  <h1 className="text-4xl sm:text-6xl font-extrabold text-white mb-6">
+                    I Create Visuals, Music & <br />
+                    <span className="text-[#D4AF37]">Digital Experiences.</span>
+                  </h1>
+                  <p className="text-neutral-400 max-w-xl text-sm mb-8">
+                    Photography, videography, video editing, music and digital projects — created with a cinematic and creative vision.
+                  </p>
+                  <div className="flex gap-4">
+                    <button onClick={() => setActiveTab('photography')} className="px-6 py-3 rounded-full bg-[#D4AF37] text-black font-bold text-xs uppercase tracking-wider">
+                      View My Work
+                    </button>
+                    <button onClick={() => setActiveTab('contact')} className="px-6 py-3 rounded-full border border-neutral-700 text-white font-bold text-xs uppercase tracking-wider">
+                      Contact Me
+                    </button>
+                  </div>
+                </section>
+
+                {/* Stats */}
+                <section className="bg-[#111111] border-y border-neutral-900 py-12 px-6">
+                  <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+                    {stats.map((s, i) => (
+                      <div key={i}>
+                        <div className="text-3xl font-black text-white">{s.value}</div>
+                        <div className="text-xs tracking-wider uppercase text-neutral-500 mt-1">{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            )}
+
+            {/* Gallery */}
+            {(activeTab === 'photography' || activeTab === 'home') && (
+              <section className="max-w-6xl mx-auto px-6 py-20">
+                <h2 className="text-2xl font-bold text-white mb-8 border-l-4 border-[#D4AF37] pl-4">SELECTED PHOTOGRAPHY</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {photos.map((p, i) => (
+                    <div key={i} className="relative rounded-2xl overflow-hidden border border-neutral-800 bg-neutral-900 h-72">
+                      <img src={p.img} alt={p.title} className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent flex items-end p-6">
+                        <div>
+                          <span className="text-xs text-[#D4AF37] font-bold uppercase">{p.cat}</span>
+                          <h3 className="text-lg font-bold text-white">{p.title}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Color Grade */}
+            <section className="bg-[#0d0d0d] border-y border-neutral-900 py-20 px-6">
+              <div className="max-w-4xl mx-auto text-center">
+                <h2 className="text-2xl font-bold text-white mb-2">COLOR GRADING COMPARISON</h2>
+                <p className="text-xs text-neutral-400 mb-8">Drag slider to compare RAW vs Graded</p>
+                <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden border border-neutral-800">
+                  <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200" alt="Graded" className="absolute inset-0 w-full h-full object-cover filter contrast-125 saturate-150" />
+                  <div className="absolute inset-0 overflow-hidden" style={{ width: `${sliderPos}%` }}>
+                    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200" alt="RAW" className="absolute inset-0 w-full h-full object-cover filter grayscale opacity-80" style={{ width: '100%', maxWidth: 'none' }} />
+                  </div>
+                  <input type="range" min="0" max="100" value={sliderPos} onChange={(e) => setSliderPos(Number(e.target.value))} className="absolute inset-0 opacity-0 cursor-ew-resize w-full h-full" />
+                </div>
+              </div>
+            </section>
+
+            {/* Contact */}
+            {(activeTab === 'contact' || activeTab === 'home') && (
+              <section className="max-w-xl mx-auto px-6 py-20">
+                <div className="bg-[#111111] p-8 rounded-2xl border border-neutral-800 text-center">
+                  <h2 className="text-2xl font-bold text-white mb-6">LET'S WORK TOGETHER</h2>
+                  {formSent ? (
+                    <p className="text-[#D4AF37] font-semibold">Message Sent Successfully!</p>
+                  ) : (
+                    <form onSubmit={(e) => { e.preventDefault(); setFormSent(true); }} className="space-y-4 text-left">
+                      <input required placeholder="Your Name" className="w-full bg-[#080808] border border-neutral-800 rounded-lg p-3 text-sm text-white outline-none" />
+                      <input required type="email" placeholder="Your Email" className="w-full bg-[#080808] border border-neutral-800 rounded-lg p-3 text-sm text-white outline-none" />
+                      <textarea required placeholder="Your Message" rows="3" className="w-full bg-[#080808] border border-neutral-800 rounded-lg p-3 text-sm text-white outline-none"></textarea>
+                      <button type="submit" className="w-full py-3 bg-[#D4AF37] text-black font-bold uppercase rounded-lg text-xs">Send Message</button>
+                    </form>
+                  )}
+                </div>
+              </section>
+            )}
+          </main>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
 </html>
